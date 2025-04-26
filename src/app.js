@@ -5,8 +5,10 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/', (req, res)=>{
-  res.send('connected');
-})
+app.get('/ping', (req, res) => {
+	res.send('pong');
+});
+
+// app.use('/auth')
 
 export default app;
