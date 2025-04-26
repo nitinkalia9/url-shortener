@@ -45,4 +45,5 @@ export default (sequelize) => {
 			updatedAt: 'updated_at',
 		}
 	);
+	return User;
 };
