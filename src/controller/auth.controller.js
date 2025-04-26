@@ -1,3 +1,4 @@
+import { response } from 'express';
 import db from '../models/index.js';
 import { emailRegex, GetRandomString } from '../utils/index.js';
 import moment from 'moment';
@@ -21,12 +22,12 @@ export const Signup = async (req, res) => {
 			throw { status: 409, message: `Account with this email already exists` };
 		}
 		const user = await db.User.create({ first_name, last_name, email, password, phone });
-    const user_id = user.id;
+		const user_id = user.id;
 		let response = { id: user_id };
 		try {
-      const login_at = moment.utc();
-      const expires_at = login_at.clone().add(7, 'days');
-      const token = GetRandomString(16);
+			const login_at = moment.utc();
+			const expires_at = login_at.clone().add(7, 'days');
+			const token = GetRandomString(16);
 			await db.UserLogin.create({ user_id, token, login_at, expires_at });
 			response.access_token = token;
 		} catch (err) {
@@ -40,10 +41,34 @@ export const Signup = async (req, res) => {
 	}
 };
 /* login */
-export const Login = (req, res) => {
+export const Login = async (req, res) => {
 	try {
-		/*  */
+		const { email, password } = req.body;
+
+		if (!email || !password) {
+			throw { status: 400, message: 'Enter all the required Details' };
+		}
+
+		const user = await db.User.findOne({ where: { email } });
+		if (!user) {
+			throw { status: 401, message: 'Invalid Credentials' };
+		}
+
+		if (user.password != password) {
+			throw { status: 401, message: 'Invalid Credentials' };
+		}
+		const login_at = moment.utc();
+		const expires_at = moment.utc().add(7, 'days');
+		const token = GetRandomString(16);
+		await db.UserLogin.create({ user_id: user.id, token, login_at, expires_at });
+		return res.status(200).json({
+			message: 'User Logged In Successfully',
+			data: {
+				access_token: token,
+			},
+		});
 	} catch (err) {
+		console.log(err);
 		const status = err?.status || 500;
 		const message = err?.message || 'Something went wrong, pls try again shortly.';
 		res.status(status).json({ message });
@@ -60,7 +85,7 @@ export const ForgretPasswordRequest = (req, res) => {
 	}
 };
 
-export const ForgretPasswordRest = (req, res) => {
+export const ForgretPasswordReset = (req, res) => {
 	try {
 		/*  */
 	} catch (err) {
@@ -69,4 +94,3 @@ export const ForgretPasswordRest = (req, res) => {
 		res.status(status).json({ message });
 	}
 };
-
