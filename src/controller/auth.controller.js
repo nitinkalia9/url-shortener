@@ -39,3 +39,34 @@ export const Signup = async (req, res) => {
 		res.status(status).json({ message });
 	}
 };
+/* login */
+export const Login = (req, res) => {
+	try {
+		/*  */
+	} catch (err) {
+		const status = err?.status || 500;
+		const message = err?.message || 'Something went wrong, pls try again shortly.';
+		res.status(status).json({ message });
+	}
+};
+/* forget password */
+export const ForgretPasswordRequest = (req, res) => {
+	try {
+		/*  */
+	} catch (err) {
+		const status = err?.status || 500;
+		const message = err?.message || 'Something went wrong, pls try again shortly.';
+		res.status(status).json({ message });
+	}
+};
+
+export const ForgretPasswordRest = (req, res) => {
+	try {
+		/*  */
+	} catch (err) {
+		const status = err?.status || 500;
+		const message = err?.message || 'Something went wrong, pls try again shortly.';
+		res.status(status).json({ message });
+	}
+};
+
