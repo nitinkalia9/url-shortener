@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import Sequelize from 'sequelize';
 import process from 'process';
 import UserModel from './User.js';
+import UserLoginModel from './UserLogin.js';
 
 // Required for __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -25,9 +26,11 @@ if (config.use_env_variable) {
 }
 
 const User = UserModel(sequelize);
+const UserLogin = UserLoginModel(sequelize);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.User = User;
+db.UserLogin = UserLogin;
 
 export default db;

@@ -2,8 +2,6 @@
 import db from './src/models/index.js';
 import app from './src/app.js';
 
-await db.sequelize.authenticate();
-
 const port = process.env.port;
 
 if (!port) {
@@ -12,7 +10,8 @@ if (!port) {
 }
 
 try {
-	db.sequelize.sync({ alter: true }).then(() => {
+	db.sequelize.authenticate().then(() => {
+	// db.sequelize.sync({ alter: true }).then(() => {
 		app.listen(port, () => {
 			console.log(`URL shortener service is runnig on port ${port}`);
 		});
