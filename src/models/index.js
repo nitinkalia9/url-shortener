@@ -3,13 +3,14 @@ import { fileURLToPath } from 'url';
 import Sequelize from 'sequelize';
 import process from 'process';
 import UserModel from './User.js';
+import UserLoginModel from './UserLogin.js';
 
 // Required for __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const env = process.env.NODE_ENV || 'development';
-import configFile from '../config/config.js'; // Use the correct config
+import configFile from '../config/db.config.js'; // Use the correct config
 const config = configFile[env];
 
 const db = {};
@@ -25,9 +26,11 @@ if (config.use_env_variable) {
 }
 
 const User = UserModel(sequelize);
+const UserLogin = UserLoginModel(sequelize);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.User = User;
+db.UserLogin = UserLogin;
 
 export default db;
