@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const env = process.env.NODE_ENV || 'development';
-import configFile from '../config/config.js'; // Use the correct config
+import configFile from '../config/db.config.js'; // Use the correct config
 const config = configFile[env];
 
 const db = {};

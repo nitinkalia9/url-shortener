@@ -1,13 +1,13 @@
 /* entry file */
 import express from 'express';
 import 'dotenv/config';
-import db from './models/index.js';
+import db from './src/models/index.js';
 
 await db.sequelize.authenticate();
 console.log('Database connected.');
 
-await db.sequelize.sync({ alter: true });
-console.log('Tables synced.');
+// await db.sequelize.sync({ alter: true });
+// console.log('Tables synced.');
 
 const app = express();
 const port = 3000;
