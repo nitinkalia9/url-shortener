@@ -1,5 +1,6 @@
 import express from 'express';
 import 'dotenv/config';
+import AuthRouter from './router/auth.router.js'
 
 const app = express();
 
@@ -9,6 +10,6 @@ app.get('/ping', (req, res) => {
 	res.send('pong');
 });
 
-// app.use('/auth')
+app.use('/auth', AuthRouter)
 
 export default app;
